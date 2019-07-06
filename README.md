@@ -1,6 +1,6 @@
 # nemv
 node express mongo vue vuetify 
-## config ���� ���� ���
+## config 파일 세팅
 
 **config/index.js**  
 ```javascript
