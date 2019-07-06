@@ -43,7 +43,7 @@
                 v-model="agree"
                 :error-messages="errors.collect('agree')"
                 value="1"
-                label="약관동의: 암호화 되어 있지 않은 사이트인데 정말 가입하겠습니까?"
+                label="약관동의: 암호화도 안되어 있는 사이트인데 정말 가입하겠습니까?"
                 data-vv-name="agree"
                 type="checkbox"
                 required
@@ -125,12 +125,13 @@ export default {
           return this.$axios.post('register', this.form)
         })
         .then(r => {
-          if (!r.data.success) throw new Error('서버가 거부했습니다.')
-          this.pop('가입 완료 되었습니다.', 'success')
-
+          if (!r.data.success) throw new Error(r.data.msg)
+          this.$store.commit('pop', { msg: '가입 완료 되었습니다', color: 'success' })
           this.$router.push('/sign')
         })
-        .catch(e => this.pop(e.message, 'warning'))
+        .catch(e => {
+          if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'warning' })
+        })
     },
     pop (m, cl) {
       this.sb.act = true

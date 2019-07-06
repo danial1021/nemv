@@ -16,7 +16,6 @@ var cross_env = require('cross-env');
 var port = normalizePort((cross_env, process.env.PORT) || '3000');
 app.set('port', port);
 
-
 /**
  * Create HTTP server.
  */
