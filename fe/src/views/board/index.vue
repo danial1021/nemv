@@ -5,7 +5,7 @@
         <v-card>
           <v-card-title class="headline">
             <v-tooltip bottom>
-              <span slot="activator">{{board.title}}</span>
+              <span slot="activator">{{board.name}}</span>
               <span>{{board.rmk}}</span>
             </v-tooltip>
             <v-spacer></v-spacer>
@@ -136,12 +136,14 @@
 </template>
 <script>
 
+// import VueRecaptcha from 'vue-recaptcha'
+
 export default {
+  // components: { VueRecaptcha },
   data () {
     return {
       board: {
         name: '로딩중...',
-        title: '로딩중...',
         rmk: '무엇?'
       },
       articles: [],
@@ -220,18 +222,36 @@ export default {
     onVerify (r) {
       this.form.response = r
       this.$refs.recaptcha.reset()
-      if (!this.dialog) return
       if (this.dlMode === 1) this.add()
-      else if (this.dlMode === 2) this.mod()
+      else this.mod()
     },
     onExpired () {
       this.form.response = ''
       this.$refs.recaptcha.reset()
     },
     checkRobot () {
-      if (!this.form.response.length) return this.$refs.recaptcha.execute()
+      // console.log(this.form.response)
+      if (this.form.response === '') return this.$refs.recaptcha.execute()
       if (this.dlMode === 1) this.add()
-      else if (this.dlMode === 2) this.mod()
+      else this.mod()
+    },
+    rcc (r) {
+      // this.$refs.recaptcha.reset()
+      this.$refs.recaptcha.execute()
+      //   .then(r => console.log(r))
+      //   .catche(e => console.log(e.message))
+    },
+    rcc2 (r) {
+      this.$refs.recaptcha.reset()
+    },
+    sendRecaptcha (token) {
+      this.$refs.recaptcha.reset()
+      const bd = {
+        response: token
+      }
+      this.$axios.post('/recaptcha', bd)
+        .then(r => console.log(r))
+        .catch(e => console.error(e.massage))
     },
     addDialog () {
       this.dialog = true
@@ -329,7 +349,6 @@ export default {
       this.$axios.delete(`article/${this.selArticle._id}`)
         .then(({ data }) => {
           this.dialog = false
-          this.dlMode = 0
           if (!data.success) throw new Error(data.msg)
           this.list()
         })

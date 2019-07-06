@@ -98,9 +98,8 @@
     <v-content>
       <router-view/>
     </v-content>
-    <v-footer app>
-      <v-spacer></v-spacer>
-      <span>{{siteCopyright}} &nbsp;</span>
+    <v-footer fixed app>
+      <span>{{siteCopyright}}</span>
     </v-footer>
     <v-snackbar
       v-model="$store.state.sb.act"
@@ -268,7 +267,7 @@ export default {
         .then(({ data }) => {
           data.ds.forEach(v => {
             this.items[1].subItems.push({
-              title: v.title,
+              title: v.name,
               to: {
                 path: `/board/${v.name}`
               }

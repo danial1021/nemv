@@ -3,7 +3,8 @@ const createError = require('http-errors')
 const Board = require('../../../../models/boards')
 
 router.post('/', (req, res, next) => {
-  Board.create(req.body)
+  const { name, lv, rmk } = req.body
+  Board.create({ name, lv, rmk })
     .then(r => {
       res.send({ success: true, msg: r, token: req.token })
     })
