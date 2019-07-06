@@ -5,7 +5,7 @@
         <v-card>
           <v-card-title class="headline">
             <v-tooltip bottom>
-              <span slot="activator">{{board.name}}</span>
+              <span slot="activator">{{board.title}}</span>
               <span>{{board.rmk}}</span>
             </v-tooltip>
             <v-spacer></v-spacer>
@@ -38,9 +38,11 @@
             <template slot="actions-prepend">
             </template>
             <template slot="actions-append">
-              <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
             </template>
           </v-data-table>
+          <!-- <v-card-text>
+            <v-pagination v-model="pagination.page" :length="pages" style="width:200px"></v-pagination>
+          </v-card-text> -->
         </v-card>
       </v-flex>
       <v-btn
@@ -89,34 +91,47 @@
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12>
-                <v-text-field
-                  label="제목"
-                  persistent-hint
-                  required
-                  v-model="form.title"
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-textarea
-                  label="내용"
-                  persistent-hint
-                  required
-                  v-model="form.content"
-                ></v-textarea>
-              </v-flex>
-            </v-layout>
-          </v-container>
+          <v-form>
+            <v-text-field
+              label="제목"
+              persistent-hint
+              required
+              v-model="form.title"
+            ></v-text-field>
+            <v-textarea
+              label="내용"
+              persistent-hint
+              required
+              v-model="form.content"
+            ></v-textarea>
+
+            <vue-recaptcha
+              ref="recaptcha"
+              :sitekey="$cfg.recaptchaSiteKey"
+              size="invisible"
+              @verify="onVerify"
+              @expired="onExpired"
+            >
+            </vue-recaptcha>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat @click="(dlMode === 1) ? add() : mod()">확인</v-btn>
+          <v-btn color="green darken-1" flat @click="checkRobot()">확인</v-btn>
           <v-btn color="red darken-1" flat @click.native="dialog = false">취소</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- <vue-recaptcha
+      ref="recaptcha"
+      sitekey="6Lcu23sUAAAAACpyLEfxuMrovIwZAZ1x5hnAEGFv"
+      @verify="onVerify"
+      @expired="onExpired"
+    >
+      <v-btn @click="rcc">rcc</v-btn>
+      <v-btn @click="rcc2">rcc2</v-btn>
+    </vue-recaptcha> -->
   </v-container>
 </template>
 <script>
@@ -124,9 +139,9 @@
 export default {
   data () {
     return {
-      limits: [ 5, 6, 7, 11],
       board: {
         name: '로딩중...',
+        title: '로딩중...',
         rmk: '무엇?'
       },
       articles: [],
@@ -134,7 +149,8 @@ export default {
       lvs: [0, 1, 2, 3],
       form: {
         title: '',
-        content: ''
+        content: '',
+        response: ''
       },
       headers: [
         { text: '날짜', value: '_id', sortable: true, class: 'hidden-sm-and-down' },
@@ -144,7 +160,10 @@ export default {
         { text: '추천', value: 'cnt.like', sortable: true }
       ],
       loading: false,
-      pagination: {},
+      pagination: {
+        sortBy: '_id',
+        descending: true
+      },
       dlMode: 0, // 0: read, 1: write, 2: modify
       selArticle: {},
       ca: false,
@@ -156,8 +175,7 @@ export default {
         order: 0,
         limit: 1
       },
-      timeout: null,
-      limits: [ 5, 10, 20 ]
+      timeout: null
     }
   },
   mounted () {
@@ -199,20 +217,32 @@ export default {
     }
   },
   methods: {
+    onVerify (r) {
+      this.form.response = r
+      this.$refs.recaptcha.reset()
+      if (!this.dialog) return
+      if (this.dlMode === 1) this.add()
+      else if (this.dlMode === 2) this.mod()
+    },
+    onExpired () {
+      this.form.response = ''
+      this.$refs.recaptcha.reset()
+    },
+    checkRobot () {
+      if (!this.form.response.length) return this.$refs.recaptcha.execute()
+      if (this.dlMode === 1) this.add()
+      else if (this.dlMode === 2) this.mod()
+    },
     addDialog () {
       this.dialog = true
       this.dlMode = 1
-      this.form = {
-        title: '',
-        content: ''
-      }
+      this.form.title = ''
+      this.form.content = ''
     },
     modDialog () {
       this.dlMode = 2
-      this.form = {
-        title: this.selArticle.title,
-        content: this.selArticle.content
-      }
+      this.form.title = this.selArticle.title
+      this.form.content = this.selArticle.content
     },
     getBoard () {
       this.$axios.get(`board/read/${this.$route.params.name}`)
@@ -299,6 +329,7 @@ export default {
       this.$axios.delete(`article/${this.selArticle._id}`)
         .then(({ data }) => {
           this.dialog = false
+          this.dlMode = 0
           if (!data.success) throw new Error(data.msg)
           this.list()
         })
