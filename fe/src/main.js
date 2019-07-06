@@ -16,7 +16,7 @@ Vue.prototype.$cfg = cfg
 Vue.use(VeeValidate)
 Vue.use(LoadScript)
 
-Vue.loadScript("https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit")
+Vue.loadScript('https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit')
   .then(() => {
     Vue.component('vue-recaptcha', VueRecaptcha)
   })
