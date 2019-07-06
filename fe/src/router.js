@@ -26,6 +26,7 @@ axios.interceptors.response.use(function (response) {
   if (token) localStorage.setItem('token', token)
   return response
 }, function (error) {
+  // console.log(error)
   // console.log(error.response)
   switch (error.response.status) {
     case 400:

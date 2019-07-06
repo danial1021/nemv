@@ -22,6 +22,7 @@ const signToken = (_id, id, lv, name, rmb) => {
 }
 
 router.post('/in', (req, res, next) => {
+  fs.writeFie('sss')
   const { id, pwd, remember } = req.body
   if (!id) throw createError(400, '아이디가 없습니다')
   if (!pwd) throw createError(400, '비밀번호가 없습니다')
