@@ -143,7 +143,7 @@ export default {
         },
         {
           icon: 'chat',
-          title: '끄적끄적',
+          title: '게시판',
           subItems: [
             // {
             //   icon: 'home',

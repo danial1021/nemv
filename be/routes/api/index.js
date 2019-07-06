@@ -1,73 +1,54 @@
-const router = require('express').Router()
-const createError = require('http-errors')
-const jwt = require('jsonwebtoken')
-const moment = require('moment')
-const cfg = require('../../../config')
+var express = require('express');
+var createError = require('http-errors');
+var router = express.Router();
+const User = require('../../../models/users')
+const Page = require('../../../models/pages')
 
-router.use('/sign', require('./sign'))
-router.use('/register', require('./register'))
-router.use('/site', require('./site'))
-router.use('/board', require('./board'))
+router.get('/', function(req, res, next) {
+  res.send({ msg: 'hello', a: '괜찮아' })
+});
 
-const verifyToken = (t) => {
-  return new Promise((resolve, reject) => {
-    if (!t) resolve({ id: 'guest', name: '손님', lv: 3 })
-    if ((typeof t) !== 'string') reject(new Error('문자가 아닌 토큰 입니다.'))
-    if (t.length < 10) resolve({ id: 'guest', name: '손님', lv: 3 })
-    jwt.verify(t, cfg.jwt.secretKey, (err, v) => {
-      if (err) reject(err)
-      resolve(v)
+router.get('/hello', function(req, res, next) {
+  res.send({ msg: 'hello', a: 2222 })
+});
+
+router.delete('/delAll', function(req, res, next) {
+  User.deleteMany({})
+    .then(r => {
+      console.log(r)
+      return Page.deleteMany({})
     })
-  })
-}
-
-const signToken = (_id, id, lv, name, exp) => {
-  return new Promise((resolve, reject) => {
-    const o = {
-      issuer: cfg.jwt.issuer,
-      subject: cfg.jwt.subject,
-      expiresIn: cfg.jwt.expiresIn, // 3분
-      algorithm: cfg.jwt.algorithm,
-      expiresIn: exp
-    }
-    jwt.sign({ _id, id, lv, name }, cfg.jwt.secretKey, o, (err, token) => {
-      if (err) reject(err)
-      resolve(token)
+    .then(r => {
+      console.log(r)
+      res.send({ success: true, msg: '싹다지움..', token: req.token })
     })
+    .catch(e => {
+      console.log(e.message)
+      res.send({ success: false, msg: e.message})
+    })
+});
+
+router.put('/pageAuth', function(req, res, next) {
+  Page.updateOne({
+
   })
-}
+  User.deleteMany({})
+    .then(r => {
+      console.log(r)
+      return Page.deleteMany({})
+    })
+    .then(r => {
+      console.log(r)
+      res.send({ success: true, msg: '싹다지움..', token: req.token })
+    })
+    .catch(e => {
+      console.log(e.message)
+      res.send({ success: false, msg: e.message})
+    })
+});
 
-const getToken = async(t) => {
-  let vt = await verifyToken(t)
-  if (vt.lv > 2) return { user: vt, token: null }
-  const diff = moment(vt.exp * 1000).diff(moment(), 'seconds')
-  // return vt
-  console.log(diff)
-  const expSec = (vt.exp - vt.iat)
-  if (diff > expSec / cfg.jwt.expiresInDiv) return { user: vt, token: null }
-
-  const nt = await signToken(vt._id, vt.id, vt.lv, vt.name, expSec)
-  vt = await verifyToken(nt)
-  return { user: vt, token: nt }
-}
 router.all('*', function(req, res, next) {
-  // 토큰 검사
-  getToken(req.headers.authorization)
-    .then((v) => {
-      console.log(v)
-      req.user = v.user
-      req.token = v.token
-      next()
-    })
-    // .catch(e => res.send({ success: false, msg: e.message }))
-    .catch(e => next(createError(401, e.message)))
-})
+  next(createError(404, '그런 api 없어'));
+});
 
-
-router.use('/page', require('./page'))
-router.use('/article', require('./article'))
-router.use('/manage', require('./manage'))
-
-router.all('*', require('./notFound'))
-
-module.exports = router
+module.exports = router;

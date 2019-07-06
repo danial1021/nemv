@@ -4,7 +4,7 @@ const cfg = require('../../config')
 mongoose.set('useCreateIndex', true)
 const siteSchema = new mongoose.Schema({
   title: { type: String, default: 'NEMV', index: true },
-  copyright: { type: String, default: '© 2019 nemv' },
+  copyright: { type: String, default: '© 2019 nemv-gsm' },
   dark: { type: Boolean, default: false }
 })
 

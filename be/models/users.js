@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema)
 // User.collection.dropIndexes({ name: 1})
-// User.deleteMany({}).then(r => { console.log(r)})
+
 User.findOne({ id: cfg.admin.id })
   .then((r) => {
     // console.log(r)
