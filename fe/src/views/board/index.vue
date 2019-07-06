@@ -5,7 +5,7 @@
         <v-card>
           <v-card-title class="headline">
             <v-tooltip bottom>
-              <span slot="activator">{{board.name}}</span>
+              <span slot="activator">{{board.title}}</span>
               <span>{{board.rmk}}</span>
             </v-tooltip>
             <v-spacer></v-spacer>
@@ -105,19 +105,11 @@
               v-model="form.content"
             ></v-textarea>
 
-            <vue-recaptcha
-              ref="recaptcha"
-              :sitekey="$cfg.recaptchaSiteKey"
-              size="invisible"
-              @verify="onVerify"
-              @expired="onExpired"
-            >
-            </vue-recaptcha>
           </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat @click="checkRobot()">확인</v-btn>
+          <v-btn color="green darken-1" flat @click="(dlMode === 1) ? add() : mod()">확인</v-btn>
           <v-btn color="red darken-1" flat @click.native="dialog = false">취소</v-btn>
         </v-card-actions>
       </v-card>
@@ -136,14 +128,12 @@
 </template>
 <script>
 
-// import VueRecaptcha from 'vue-recaptcha'
-
 export default {
-  // components: { VueRecaptcha },
   data () {
     return {
       board: {
         name: '로딩중...',
+        title: '로딩중...',
         rmk: '무엇?'
       },
       articles: [],
@@ -219,40 +209,6 @@ export default {
     }
   },
   methods: {
-    onVerify (r) {
-      this.form.response = r
-      this.$refs.recaptcha.reset()
-      if (this.dlMode === 1) this.add()
-      else this.mod()
-    },
-    onExpired () {
-      this.form.response = ''
-      this.$refs.recaptcha.reset()
-    },
-    checkRobot () {
-      // console.log(this.form.response)
-      if (this.form.response === '') return this.$refs.recaptcha.execute()
-      if (this.dlMode === 1) this.add()
-      else this.mod()
-    },
-    rcc (r) {
-      // this.$refs.recaptcha.reset()
-      this.$refs.recaptcha.execute()
-      //   .then(r => console.log(r))
-      //   .catche(e => console.log(e.message))
-    },
-    rcc2 (r) {
-      this.$refs.recaptcha.reset()
-    },
-    sendRecaptcha (token) {
-      this.$refs.recaptcha.reset()
-      const bd = {
-        response: token
-      }
-      this.$axios.post('/recaptcha', bd)
-        .then(r => console.log(r))
-        .catch(e => console.error(e.massage))
-    },
     addDialog () {
       this.dialog = true
       this.dlMode = 1
@@ -349,6 +305,7 @@ export default {
       this.$axios.delete(`article/${this.selArticle._id}`)
         .then(({ data }) => {
           this.dialog = false
+          this.dlMode = 0
           if (!data.success) throw new Error(data.msg)
           this.list()
         })

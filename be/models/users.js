@@ -30,7 +30,7 @@ User.findOne({ id: cfg.admin.id })
     return User.updateOne({ _id: r._id }, { $set: { pwd } })
   })
   .then(r => {
-    if (r) console.log('pwd changed!')
+    if (r) console.log('password changed!')
   })
   .catch((e) => {
     console.error(e.message)
