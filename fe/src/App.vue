@@ -68,6 +68,7 @@
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
+    
     <v-toolbar
       app
     >
@@ -131,11 +132,11 @@ export default {
       items: [
         {
           icon: 'donut_large',
-          title: '현황',
+          title: '학교',
           act: true,
           subItems: [
             {
-              title: '오늘',
+              title: '학교 소개',
               to: {
                 path: '/'
               }

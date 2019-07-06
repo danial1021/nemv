@@ -15,7 +15,7 @@
       <v-btn color="warning" @click="parent">부모용</v-btn>
     </v-card-actions>
     <v-card-text v-if="va">
-      <v-alert v-model="va" dismissible>자식 혼자 떠들기</v-alert>
+      <v-alert v-model="va" dismissible>자식 혼자 말함</v-alert>
     </v-card-text>
   </v-card>
 </template>
