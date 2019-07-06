@@ -30,3 +30,5 @@ module.exports = {
 
 참고: [https://www.npmjs.com/package/jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)  
 jsonwebtoken에 대한 내용 및 알고리즘
+
+be에 있는 config는 자신에 맞게 수정하세요!
