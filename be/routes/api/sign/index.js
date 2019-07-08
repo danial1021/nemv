@@ -2,7 +2,6 @@ const router = require('express').Router()
 const createError = require('http-errors')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
-const request = require('request')
 const cfg = require('../../../../config')
 const User = require('../../../models/users')
 
@@ -28,43 +27,22 @@ router.post('/in', (req, res, next) => {
   if (!pwd) throw createError(400, '비밀번호가 없습니다')
   if (remember === undefined) throw createError(400, '기억하기가 없습니다.')
 
+  //let u = {}
   User.findOne({ id })
     .then((r) => {
       if (!r) throw new Error('존재하지 않는 아이디입니다.')
       const p = crypto.scryptSync(pwd, r._id.toString(), 64, { N: 1024 }).toString('hex')
       if (r.pwd !== p) throw new Error('비밀번호가 틀립니다.')
+      //u = r
       return signToken(r._id, r.id, r.lv, r.name, remember)
     })
     .then((r) => {
-      res.send({ success: true, token: r })
+      res.send({ success: true, token: r}) // , user: u
     })
     .catch((e) => {
       res.send({ success: false, msg: e.message })
       // next(createError(401, e.massage))
     })
 })
-
-router.post('/up', (req, res, next) => {
-  const u = req.body
-  if (!u.id) throw createError(400, '아이디가 없습니다')
-  if (!u.pwd) throw createError(400, '비밀번호가 없습니다')
-  if (!u.name) throw createError(400, '이름이 없습니다')
-
-    User.findOne({ id: u.id })
-      .then((r) => {
-        if (r) throw new Error('이미 등록되어 있는 아이디입니다')
-        return User.create(u)
-      })
-      .then((r) => {
-        const pwd = crypto.scryptSync(r.pwd, r._id.toString(), 64, { N: 1024 }).toString('hex')
-        return User.updateOne({ _id: r._id }, { $set: { pwd } })
-      })
-      .then((r) => {
-        res.send({ success: true })
-      })
-      .catch((e) => {
-        res.send({ success: false, msg: e.message })
-      })
-  })
 
 module.exports = router;

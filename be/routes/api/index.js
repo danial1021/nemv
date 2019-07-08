@@ -6,6 +6,7 @@ const cfg = require('../../../config')
 
 router.use('/sign', require('./sign'))
 router.use('/site', require('./site'))
+router.use('/register', require('./register'))
 router.use('/board', require('./board'))
 
 const verifyToken = (t) => {

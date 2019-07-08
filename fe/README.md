@@ -2,25 +2,11 @@
 
 ## Project setup
 ```
-yarn install
+If you do not have a yarn, please install it from official website
+setup command: yarn(=npm install)
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
+yarn serve
 ```
