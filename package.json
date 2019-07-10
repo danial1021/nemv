@@ -8,6 +8,9 @@
     "pm2": "cd fe && yarn && yarn build && cd ../be && yarn && cd .. && pm2 start --env pr"
   },
   "dependencies": {
-    "cross-env": "^5.2.0"
+    "cross-env": "^5.2.0",
+    "filepond": "^4.4.10",
+    "filepond-plugin-file-validate-type": "^1.2.4",
+    "filepond-plugin-image-preview": "^4.2.1"
   }
 }

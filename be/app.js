@@ -223,6 +223,7 @@ module.exports = app;
 // const s = crypto.randomFillSync(bf)
 // console.log(s.toString('hex'))
 
+// moment 모듈 테스트
 // const moment = require('moment')
 
 // moment.locale('ko')
@@ -266,13 +267,20 @@ module.exports = app;
 //   .populate('_board')
 //   .then(r => console.log(r))
 
-
+/*
+// 버퍼에서 파일 확인, base64-img 모듈 테스트
 const b = Buffer.from('abcd')
 console.log(b)
 
 const fs = require('fs')
-
+var base64Img = require('base64-img');
 fs.readFile('public/ebb396cd8208f8f106f5d76aa4ef6c7d', (e,r) => {
   console.log(r)
   console.log(r.length)
 })
+
+var data  = base64Img.base64Sync('public/ebb396cd8208f8f106f5d76aa4ef6c7d')
+console.log(data)
+
+fs.writeFileSync('public/see.txt')
+*/

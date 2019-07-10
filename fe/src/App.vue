@@ -137,7 +137,7 @@ export default {
               }
             },
             {
-              title: '학교 연혁',
+              title: '페이지 소개',
               to: {
                 path: '/school/show'
               }//
@@ -287,7 +287,7 @@ export default {
 }
 </script>
 <style>
-/* .v-datatable__actions__range-controls {
+.v-datatable__actions__range-controls {
   display: none;
-} */
+}
 </style>

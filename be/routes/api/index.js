@@ -8,7 +8,6 @@ router.use('/sign', require('./sign'))
 router.use('/site', require('./site'))
 router.use('/register', require('./register'))
 router.use('/board', require('./board'))
-router.use('/user', require('./user'))
 
 const verifyToken = (t) => {
   return new Promise((resolve, reject) => {
@@ -43,7 +42,7 @@ const getToken = async(t) => {
   if (vt.lv > 2) return { user: vt, token: null }
   const diff = moment(vt.exp * 1000).diff(moment(), 'seconds')
   // return vt
-  console.log(diff)
+  // console.log(diff)
   const expSec = (vt.exp - vt.iat)
   if (diff > expSec / cfg.jwt.expiresInDiv) return { user: vt, token: null }
 
@@ -55,7 +54,7 @@ router.all('*', function(req, res, next) {
   // 토큰 검사
   getToken(req.headers.authorization)
     .then((v) => {
-      console.log(v)
+      // console.log(v)
       req.user = v.user
       req.token = v.token
       next()
