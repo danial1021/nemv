@@ -27,17 +27,20 @@ router.post('/in', (req, res, next) => {
   if (!pwd) throw createError(400, '비밀번호가 없습니다')
   if (remember === undefined) throw createError(400, '기억하기가 없습니다.')
 
-  //let u = {}
-  User.findOne({ id })
+  let u = {}
+  User.findOne({ id }).lean()
     .then((r) => {
       if (!r) throw new Error('존재하지 않는 아이디입니다.')
       const p = crypto.scryptSync(pwd, r._id.toString(), 64, { N: 1024 }).toString('hex')
       if (r.pwd !== p) throw new Error('비밀번호가 틀립니다.')
-      //u = r
+      u = r
+      // findOne에서 넘어온 data 'r'은 조작 불가
+      // lean()을 통해서 가능하게 함
+      delete u.pwd
       return signToken(r._id, r.id, r.lv, r.name, remember)
     })
     .then((r) => {
-      res.send({ success: true, token: r}) // , user: u
+      res.send({ success: true, token: r, user: u}) 
     })
     .catch((e) => {
       res.send({ success: false, msg: e.message })

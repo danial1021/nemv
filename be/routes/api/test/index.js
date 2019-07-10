@@ -5,7 +5,7 @@ const User = require('../../../models/users')
 const Page = require('../../../models/pages')
 
 router.get('/', function(req, res, next) {
-  res.send({ msg: 'hello', a: '괜찮아' })
+  res.send({ msg: 'hello', a: 'test' })
 });
 
 router.get('/hello', function(req, res, next) {
@@ -20,7 +20,7 @@ router.delete('/delAll', function(req, res, next) {
     })
     .then(r => {
       console.log(r)
-      res.send({ success: true, msg: '싹다지움..', token: req.token })
+      res.send({ success: true, msg: '삭제..', token: req.token })
     })
     .catch(e => {
       console.log(e.message)

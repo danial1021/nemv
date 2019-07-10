@@ -63,8 +63,14 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'dashboard',
-      component: () => import('./views/dashboard'),
+      name: 'school',
+      component: () => import('./views/school'),
+      beforeEnter: pageCheck
+    },
+    {
+      path: '/school/show',
+      name: 'show',
+      component: () => import('./views/school/show'),
       beforeEnter: pageCheck
     },
     {
