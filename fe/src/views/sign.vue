@@ -44,9 +44,11 @@ export default {
         .then(r => {
           if (!r.data.success) throw new Error(r.data.msg)
           localStorage.setItem('token', r.data.token)
-          this.$store.commit('getToken', r.data.user) // api로
+          this.$store.commit('getToken', r.data.user)
+          // api로
           // sign.vue에서는 app.vue에 대한 것들을 조작이 불가능함
           // 그러므로 vue에서 '변이'를 사용
+          this.$router.push('/')
           this.$router.push('/')
         })
         .catch(e => {

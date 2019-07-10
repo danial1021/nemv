@@ -2424,6 +2424,11 @@ void-elements@^2.0.1:
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
   integrity sha1-wGavtYK7HLQSjWDqkjkulNXp2+w=
 
+vue-recaptcha@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vue-recaptcha/-/vue-recaptcha-1.2.0.tgz#a30ab08b4c79326d2e3ab1c1e76c367e02e6eb35"
+  integrity sha512-zgt8bAmlHbLT2XY0diwA/UgGcbp1cOYXJ8za17WM1zlOC8EiO0mpGvYzXaR1aeU0gaiv1qLO6GOUwQVVAjgwMw==
+
 which-pm-runs@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/which-pm-runs/-/which-pm-runs-1.0.0.tgz#670b3afbc552e0b55df6b7780ca74615f23ad1cb"

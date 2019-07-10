@@ -15,7 +15,7 @@
               <div>이름: {{user.name}}</div>
               <div>권한: {{user.lv}}</div>
               <div>나이: {{user.age}}</div>
-              <div>로그인 횟수: {{user.inCnt}}</div>
+              <!--<div>로그인 횟수: {{user.inCnt}}</div>-->
               <div>아이디(_id): {{user._id}}</div>
               <div>비밀번호: {{user.pwd}}</div>
             </div>

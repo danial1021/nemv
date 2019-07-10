@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
     })
     .catch((e) => {
       res.send({ success: false, msg: e.message })
-    })  
+    })
 })
 
 module.exports = router;

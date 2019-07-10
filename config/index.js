@@ -13,5 +13,6 @@ module.exports = {
     expiresIn: 60 * 3, // 기본 3분
     expiresInRemember: 60 * 60 * 24 * 7, // 기억하기 눌렀을 때 7일
     expiresInDiv: 3, // 토큰시간 나누는 기준
-  }
+  },
+  recaptchaSecret: '6LeKY6wUAAAAAM7qSgspNrbdCYWDr91FcloLfxc6' // google testkey
 }

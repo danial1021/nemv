@@ -7,14 +7,11 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
-  "optionalDependencies": {
-    "fsevents": "*"
-  },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
+    "@toast-ui/vue-editor": "^1.1.1",
     "axios": "^0.18.0",
     "cross-env": "^5.2.0",
-    "eslint": "^6.0.1",
     "eslint-loader": "^2.2.1",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
@@ -27,7 +24,8 @@
     "vue-recaptcha": "^1.2.0",
     "vue-router": "^3.0.1",
     "vuetify": "^1.3.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "webpack": "^4.35.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",

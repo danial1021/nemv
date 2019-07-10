@@ -12,26 +12,24 @@ export default new Vuex.Store({
       color: 'error'
     },
     user: {
-      name: '사용자',
-      img: 'https://taegon.kim/wp-content/uploads/2018/05/image-5.png',
-      id: ''
+      name: '일반사용자',
+      id: '없음',
+      img: 'https://randomuser.me/api/portraits/men/85.jpg'
     }
   },
   mutations: {
     getToken (state, user) {
       state.token = localStorage.getItem('token')
-      console.log(user)
       state.user = user
     },
     delToken (state) {
       localStorage.removeItem('token')
       state.token = null
-
       // 초기값
       state.user = {
-        name: '사용자',
-        img: 'https://taegon.kim/wp-content/uploads/2018/05/image-5.png',
-        id: ''
+        name: '일반사용자',
+        id: '없음',
+        img: 'https://randomuser.me/api/portraits/men/85.jpg'
       }
     },
     pop (state, d) {

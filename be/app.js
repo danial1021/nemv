@@ -18,7 +18,6 @@ if ((cross_env, process.env.NODE_ENV) !== 'production') app.use(cors())
 app.use('/api', require('./routes/api'))
 //app.use(history())
 app.use(express.static(path.join(__dirname, '../', 'fe', 'dist')));
-app.use(express.static(path.join(__dirname, '../', 'public')));
 
 
 // catch 404 and forward to error handler

@@ -5,7 +5,7 @@ const User = require('../../../models/users')
 const Page = require('../../../models/pages')
 
 router.get('/', function(req, res, next) {
-  res.send({ msg: 'hello', a: 'test' })
+  res.send({ msg: 'hi', a: 'good' })
 });
 
 router.get('/hello', function(req, res, next) {
@@ -20,7 +20,7 @@ router.delete('/delAll', function(req, res, next) {
     })
     .then(r => {
       console.log(r)
-      res.send({ success: true, msg: '삭제..', token: req.token })
+      res.send({ success: true, msg: 'all_delete..', token: req.token })
     })
     .catch(e => {
       console.log(e.message)
@@ -39,7 +39,7 @@ router.put('/pageAuth', function(req, res, next) {
     })
     .then(r => {
       console.log(r)
-      res.send({ success: true, msg: '싹다지움..', token: req.token })
+      res.send({ success: true, msg: 'all_delete..', token: req.token })
     })
     .catch(e => {
       console.log(e.message)
@@ -48,7 +48,7 @@ router.put('/pageAuth', function(req, res, next) {
 });
 
 router.all('*', function(req, res, next) {
-  next(createError(404, '그런 api 없어'));
+  next(createError(404, '그런 api가 없습니다'));
 });
 
 module.exports = router;

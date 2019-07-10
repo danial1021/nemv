@@ -10,15 +10,14 @@
     >
       <v-toolbar flat class="transparent">
         <v-list class="pa-0">
-
           <v-list-tile avatar>
             <v-list-tile-avatar>
-              <img :src="$store.state.user.img">
+              <img src="https://taegon.kim/wp-content/uploads/2018/05/image-5.png">
             </v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>
-                {{$store.state.user.name}}
-              </v-list-tile-title>
+              <!-- <v-list-tile-title>{{ `${$user.name} 님 (${$user.job})` }}</v-list-tile-title> -->
+              <v-list-tile-title>{{$store.state.user.name}}</v-list-tile-title>
+
             </v-list-tile-content>
             <v-list-tile-action>
               <v-btn icon @click.native.stop="mini = !mini">
@@ -76,18 +75,15 @@
                 <v-list-tile-title>회원가입</v-list-tile-title>
               </v-list-tile>
             </template>
-
             <template v-else>
-              <v-list-tile @click="$router.push('/user')">
-                <v-list-tile-title>사용자 정보 수정</v-list-tile-title>
+              <v-list-tile  @click="$router.push('/user')">
+                <v-list-tile-title>사용자 프로필 정보</v-list-tile-title>
               </v-list-tile>
-              <v-list-tile @click="signOut">
+              <v-list-tile  @click="signOut">
                 <v-list-tile-title>로그아웃</v-list-tile-title>
               </v-list-tile>
             </template>
-
           </v-list>
-
         </v-menu>
       </v-toolbar-items>
     </v-toolbar>
@@ -247,7 +243,6 @@ export default {
   mounted () {
     this.getSite()
     this.getBoards()
-    // console.log(this.$store.state.user.img)
   },
   methods: {
     signOut () {
@@ -287,7 +282,7 @@ export default {
 }
 </script>
 <style>
-.v-datatable__actions__range-controls {
+/* .v-datatable__actions__range-controls {
   display: none;
-}
+} */
 </style>

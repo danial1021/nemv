@@ -33,7 +33,7 @@
 
           <v-text-field
             label="게시판 제목"
-            :hint="form.title ? '' : '언어 이름'"
+            :hint="form.title ? '' : '야구모임'"
             persistent-hint
             required
             v-model="form.title"
@@ -41,7 +41,7 @@
 
           <v-text-field
             label="게시판 설명"
-            :hint="form.rmk ? '' : '무슨 언어인가'"
+            :hint="form.rmk ? '' : '야구를 좋아하는 사람'"
             persistent-hint
             required
             v-model="form.rmk"

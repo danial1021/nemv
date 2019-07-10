@@ -8,7 +8,7 @@
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-card-text>
-            <form>
+            <v-form>
               <v-text-field
                 v-validate="'required|min:4|max:20'"
                 v-model="form.id"
@@ -43,15 +43,24 @@
                 v-model="agree"
                 :error-messages="errors.collect('agree')"
                 value="1"
-                label="약관동의: 실제 사용중인 아이디로 가입하지 마시기 바랍니다!"
+                label="약관동의: 실제 사용중인 아이디로 절대 가입하지 마시기 바랍니다"
                 data-vv-name="agree"
                 type="checkbox"
                 required
               ></v-checkbox>
+              <vue-recaptcha
+                ref="recaptcha"
+                :sitekey="$cfg.recaptchaSiteKey"
+                size="invisible"
+                @verify="onVerify"
+                @expired="onExpired"
+              >
+              </vue-recaptcha>
 
-              <v-btn @click="submit">가입</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn @click="checkRobot()">가입</v-btn>
               <v-btn @click="clear">초기화</v-btn>
-            </form>
+            </v-form>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -73,15 +82,19 @@
 
 <script>
 import ko from 'vee-validate/dist/locale/ko'
+
 export default {
   $_veeValidate: {
     validator: 'new'
   },
+
   data: () => ({
+    invisible: '',
     form: {
       id: '',
       name: '',
-      pwd: ''
+      pwd: '',
+      response: ''
     },
     sb: {
       act: false,
@@ -110,15 +123,32 @@ export default {
       }
     }
   }),
+
   mounted () {
     this.$validator.localize('ko', this.dictionary)
   },
+
   methods: {
+    onVerify (r) {
+      console.log(r)
+      this.form.response = r
+      this.$refs.recaptcha.reset()
+      this.submit()
+    },
+    onExpired () {
+      this.form.response = ''
+      this.$refs.recaptcha.reset()
+    },
+    checkRobot () {
+      // this.$refs.recaptcha.execute()
+      if (this.form.response.length) this.submit()
+      else this.$refs.recaptcha.execute()
+    },
     submit () {
       this.$validator.validateAll()
         .then(r => {
           if (!r) throw new Error('모두 기입해주세요')
-          return this.$axios.post('register', this.form)
+          return this.$axios.post('/sign/up', this.form)
         })
         .then(r => {
           if (!r.data.success) throw new Error(r.data.msg)

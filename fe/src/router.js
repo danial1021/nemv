@@ -133,11 +133,6 @@ export default new Router({
       component: () => import('./views/user'),
       beforeEnter: pageCheck
     },
-    // {
-    //   path: '/block/:msg',
-    //   name: '차단',
-    //   component: () => import('./views/block')
-    // },
     {
       path: '/sign',
       name: '로그인',
