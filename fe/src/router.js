@@ -127,6 +127,12 @@ export default new Router({
       component: () => import('./views/manage/boards'),
       beforeEnter: pageCheck
     },
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import('./views/user'),
+      beforeEnter: pageCheck
+    },
     // {
     //   path: '/block/:msg',
     //   name: '차단',

@@ -65,6 +65,8 @@
           <v-btn icon slot="activator">
             <v-icon>more_vert</v-icon>
           </v-btn>
+          <!-- token의 있을 때와 없을 때 -->
+          <!-- 보여주는 차이 -->
           <v-list>
             <template v-if="!$store.state.token">
               <v-list-tile  @click="$router.push('/sign')">
@@ -74,10 +76,18 @@
                 <v-list-tile-title>회원가입</v-list-tile-title>
               </v-list-tile>
             </template>
-            <v-list-tile v-else @click="signOut">
-              <v-list-tile-title>로그아웃</v-list-tile-title>
-            </v-list-tile>
+
+            <template v-else>
+              <v-list-tile @click="$router.push('/user')">
+                <v-list-tile-title>사용자 정보 수정</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="signOut">
+                <v-list-tile-title>로그아웃</v-list-tile-title>
+              </v-list-tile>
+            </template>
+
           </v-list>
+
         </v-menu>
       </v-toolbar-items>
     </v-toolbar>

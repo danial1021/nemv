@@ -16,8 +16,9 @@ app.use(cookieParser());
 // console.log(path.join(__dirname, '../', 'fe', 'dist'))
 if ((cross_env, process.env.NODE_ENV) !== 'production') app.use(cors())
 app.use('/api', require('./routes/api'))
-app.use(history())
+//app.use(history())
 app.use(express.static(path.join(__dirname, '../', 'fe', 'dist')));
+app.use(express.static(path.join(__dirname, '../', 'public')));
 
 
 // catch 404 and forward to error handler
@@ -264,3 +265,14 @@ module.exports = app;
 //   .populate('_user', 'name')
 //   .populate('_board')
 //   .then(r => console.log(r))
+
+
+const b = Buffer.from('abcd')
+console.log(b)
+
+const fs = require('fs')
+
+fs.readFile('public/ebb396cd8208f8f106f5d76aa4ef6c7d', (e,r) => {
+  console.log(r)
+  console.log(r.length)
+})

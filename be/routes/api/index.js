@@ -8,6 +8,7 @@ router.use('/sign', require('./sign'))
 router.use('/site', require('./site'))
 router.use('/register', require('./register'))
 router.use('/board', require('./board'))
+router.use('/user', require('./user'))
 
 const verifyToken = (t) => {
   return new Promise((resolve, reject) => {
