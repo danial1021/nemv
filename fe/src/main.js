@@ -16,6 +16,7 @@ import { Editor, Viewer } from '@toast-ui/vue-editor'
 Vue.config.productionTip = false
 
 Vue.prototype.$cfg = cfg
+
 if (process.env.NODE_ENV === 'production' && location.protocol === 'http:' && cfg.httpsOnly) location.replace(`https://${location.hostname}`)
 Vue.use(VeeValidate)
 Vue.use(LoadScript)
