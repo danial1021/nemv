@@ -12,11 +12,19 @@
 
           <div class="title mb-3">학교 홈페이지 바로가기</div>
 
-          <v-btn
+          <!-- <v-btn
             class="mx-0"
             color="primary"
             large
             href="http://www.gsm.hs.kr/main/main.php"
+          >
+            Click
+          </v-btn> -->
+          <v-btn
+            class="mx-0"
+            color="primary"
+            large
+            @click="load"  
           >
             Click
           </v-btn>
@@ -27,3 +35,16 @@
 
   </v-container>
 </template>
+
+<script>
+export default {
+  
+
+  methods: {
+    load () {
+      window.open('http://www.gsm.hs.kr/main/main.php'); return false;
+    }
+  }
+}
+</script>
+
