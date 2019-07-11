@@ -73,7 +73,7 @@ router.post('/:_board', (req, res, next) => {
 
   if (!title) throw createError(400, '제목이 없습니다')
   if (!content) throw createError(400, '내용이 없습니다')
-  if (!response) throw createError(400, '로봇 검증이 없습니다')
+  // if (!response) throw createError(400, '로봇 검증이 없습니다')
 
   const ro = {
     uri: 'https://www.google.com/recaptcha/api/siteverify',
@@ -120,7 +120,7 @@ router.put('/:_id', (req, res, next) => {
 
   if (!title) throw createError(400, '제목이 없습니다')
   if (!content) throw createError(400, '내용이 없습니다')
-  if (!response) throw createError(400, '로봇 검증이 없습니다')
+  // if (!response) throw createError(400, '로봇 검증이 없습니다')
 
   const ro = {
     uri: 'https://www.google.com/recaptcha/api/siteverify',
