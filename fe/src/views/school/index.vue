@@ -24,7 +24,7 @@
             class="mx-0"
             color="primary"
             large
-            @click="load"  
+            @click="load"
           >
             Click
           </v-btn>
@@ -38,13 +38,11 @@
 
 <script>
 export default {
-  
 
   methods: {
     load () {
-      window.open('http://www.gsm.hs.kr/main/main.php'); return false;
+      window.open('http://www.gsm.hs.kr/main/main.php'); return false
     }
   }
 }
 </script>
-
