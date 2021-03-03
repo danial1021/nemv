@@ -20,7 +20,7 @@
     "mongoose": "^5.3.2",
     "morgan": "~1.9.0",
     "multer": "^1.4.1",
-    "pug": "2.0.0-beta11",
+    "pug": "3.0.1",
     "request": "^2.88.0",
     "sharp": "^0.22.1",
     "vue-recaptcha": "^1.2.0"
